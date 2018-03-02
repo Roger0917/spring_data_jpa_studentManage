@@ -14,8 +14,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -30,67 +33,86 @@ public class StudentController {
     private ISubjectService subjectService;
 
     @RequestMapping(value = "/pageGrade.action")
-    public ModelAndView grade(){
+    public ModelAndView grade(@RequestParam(required = true,defaultValue = "0") Integer currentPage){
         ModelAndView modelAndView = new ModelAndView();
-        Pageable pageable = new PageRequest(0,4);
+        Pageable pageable = new PageRequest(currentPage,4);
         Page<Grade> page= gradeService.pageGrade(pageable);
         List<Grade> gradeList= page.getContent();
         for (int i = 0; i <gradeList.size() ; i++) {
-            System.out.println(gradeList.get(i).getGid()+gradeList.get(i).getName()+gradeList.get(i).getMaxsize()+gradeList.get(i).getAvgscore());
+            System.out.println(gradeList.get(i).getGid()+" "+gradeList.get(i).getName()+" "+gradeList.get(i).getMaxsize()+" "+gradeList.get(i).getAvgscore());
 
         }
+        System.out.println("pageNumber:"+page.getNumber()+"TotalPages:"+page.getTotalPages()+"TotalElements"+page.getTotalElements());
         modelAndView.addObject("allgrades",gradeList);
+        modelAndView.addObject("page",page);
         modelAndView.setViewName("listgrade");
         return modelAndView;
     }
 
     @RequestMapping(value = "/pageStudent.action")
-    public ModelAndView student(){
+    public ModelAndView student(@RequestParam(required = true,defaultValue = "0") Integer currentPage){
         ModelAndView modelAndView = new ModelAndView();
         /*List<Student> studentList = studentService.findAll();
         for (Student student:
              studentList) {
             System.out.println(student.getId()+student.getSid()+student.getName()+student.getSex()+student.getBirthday());
         }*/
-        Pageable pageable = new PageRequest(0,4);
+        Pageable pageable = new PageRequest(currentPage,4);
         Page<Student> page= studentService.pageStudent(pageable);
         System.out.println("totalPages"+page.getTotalPages()+"totalElements"+page.getTotalElements()+"currentPageSize"+page.getNumberOfElements()+
                 +page.getNumber());
        // System.out.println(page.getContent());
         List<Student> list= page.getContent();
         modelAndView.addObject("allstudents",list);
+        modelAndView.addObject("page",page);
         modelAndView.setViewName("liststudent");
         return modelAndView;
     }
 
     @RequestMapping(value = "/pageSubject.action")
-    public ModelAndView subject(){
+    public ModelAndView subject(@RequestParam(required = true,defaultValue = "0") Integer currentPage){
         ModelAndView modelAndView = new ModelAndView();
-        Pageable pageable = new PageRequest(0,4);
+        Pageable pageable = new PageRequest(currentPage,4);
         Page<Subject> page= subjectService.pageSubject(pageable);
         List<Subject> subjectList =  page.getContent();
         modelAndView.addObject("allsubjects",subjectList);
+        modelAndView.addObject("page",page);
         modelAndView.setViewName("listsubject");
         return modelAndView;
     }
 
-    @RequestMapping(value = "/add/{sid}/{name}/{sex}")
+   /* @RequestMapping(value = "/add/{sid}/{name}/{sex}")
     public Student addStudent1(@PathVariable String sid,@PathVariable String name
     ,@PathVariable Integer sex){
 
         Student student = new Student(sid,name,sex);
         studentService.saveStudent(student);
         return student;
-    }
+    }*/
 
-    @RequestMapping(value = "/add/{sid}/{name}/{sex}/{photo}/{birthday}")
+   /* @RequestMapping(value = "/add/{sid}/{name}/{sex}/{photo}/{birthday}")
     public Student addStudent2(@PathVariable String sid,@PathVariable String name,
                               @PathVariable Integer sex,@PathVariable String photo,@PathVariable
                                       Date birthday){
         Student student = new Student(sid,name,photo,sex,birthday);
         studentService.saveStudent(student);
         return student;
-    }
+    }*/
+   @RequestMapping(value = "toAddStudent.action")
+   public ModelAndView toAddStudent(){
+       ModelAndView modelAndView = new ModelAndView();
+       List<Grade> addgrade = gradeService.findAll();
+       modelAndView.addObject("allgrade",addgrade);
+       modelAndView.setViewName("addstudent");
+       return modelAndView;
+   }
+   @RequestMapping(value = "addStudent.action")
+   public ModelAndView addStudent(@RequestParam String name, @RequestParam Integer sex, @RequestParam
+                                  Date date, @RequestParam String select_class){
+
+       ModelAndView modelAndView = new ModelAndView();
+       return modelAndView;
+   }
 
     @RequestMapping(value = "/update/{id}/{sid}/{name}/{sex}")
     public Student updateStudent1(@PathVariable Integer id,@PathVariable String sid,@PathVariable String name

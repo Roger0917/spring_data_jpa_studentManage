@@ -2,6 +2,13 @@
   Created by IntelliJ IDEA.
   User: Administrator
   Date: 2018/2/27 0027
+  Time: 13:19
+  To change this template use File | Settings | File Templates.
+--%>
+<%--
+  Created by IntelliJ IDEA.
+  User: Administrator
+  Date: 2018/2/27 0027
   Time: 12:55
   To change this template use File | Settings | File Templates.
 --%>
@@ -541,6 +548,7 @@
                     </ul>
                 </li>
 
+
                 <!-- <li>
                     <a href="widgets.html">
                         <i class="icon-list-alt"></i>
@@ -692,7 +700,7 @@
                         <i class="icon-home home-icon"></i>
                         <a href="#">首页</a>
                     </li>
-                    <li class="active">学生管理</li>
+                    <li class="active">学科管理</li>
                 </ul><!-- .breadcrumb -->
 
                 <div class="nav-search" id="nav-search">
@@ -708,10 +716,10 @@
             <div class="page-content">
                 <div class="page-header">
                     <h1>
-                        学生管理
+                        学科管理
                         <small>
                             <i class="icon-double-angle-right"></i>
-                            学生列表
+                            修改学科
                         </small>
                     </h1>
                 </div><!-- /.page-header -->
@@ -722,43 +730,36 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="col-xs-2">
-
                                 </div>
                                 <div class="col-xs-2">
-
                                 </div>
                                 <div class="col-xs-4">
                                 </div>
                                 <div class="col-xs-1" style="text-align: right;">
-
                                 </div>
                                 <div class="col-xs-1" style="text-align: left;">
-                                    <a href="${pageContext.request.contextPath}/toAddStudent.action"><button style="width: 66px;height: 32px; border-radius: 6px; background-color: orange; color: #FFFFFF;">添加</button></a>
+                                    <a href="${pageContext.request.contextPath}/toAddSubject.action">
+                                        <button style="width: 66px;height: 32px; border-radius: 6px; background-color: #D15B47; color: #FFFFFF;">添加</button>
+                                    </a>
                                 </div>
                             </div>
                         </div>
                         <hr>
-                        <div class="row">
+                       <%-- <div class="row">
                             <div class="col-xs-12">
                                 <table id="simple-table" class="table  table-bordered table-hover" style="text-align: center;">
                                     <thead>
                                     <tr>
-                                        <th style="width:10%; text-align: center;">详细信息</th>
-                                        <th style="width:5%; text-align: center;">序号</th>
-                                        <th style="width:10%; text-align: center;">学号</th>
-                                        <th style="width:10%; text-align: center;">姓名</th>
-                                        <th style="width:5%; text-align: center;">性别</th>
-                                        <th style="width:10%; text-align: center;">出生日期</th>
-                                        <th style="width:10%; text-align: center;">所在班级</th>
-                                        <th style="width:10%; text-align: center;">选修科目数</th>
-                                        <th style="width:5%; text-align: center;">平均分</th>
-                                        <th style="width:5%; text-align: center;">分数录入</th>
-                                        <th style="width:5%; text-align: center;">选课</th>
-                                        <th style="width:15%; text-align: center;">操作</th>
+                                        <th style="width:5%; text-align: center;">详细信息</th>
+                                        <th style="width:20%; text-align: center;">序号</th>
+                                        <th style="width:10%; text-align: center;">学科名</th>
+                                        <th style="width:10%; text-align: center;">选修人数</th>
+                                        <th style="width:10%; text-align: center;">平均分</th>
+                                        <th style="width:10%; text-align: center;">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${allstudents}" var="student">
+                                    <c:forEach items="${allsubjects}" var="subject">
                                         <tr>
                                             <td class="center">
                                                 <div class="action-buttons">
@@ -768,48 +769,23 @@
                                                     </a>
                                                 </div>
                                             </td>
-                                            <td>${student.id}</td>
-                                            <td><c:out value="${student.sid}"/></td>
-                                            <td><c:out value="${student.name}"/></td>
-                                            <td>
-                                                <c:if test="${student.sex == 1}">
-                                                    男
-                                                </c:if>
-                                                <c:if test="${student.sex == 0}">
-                                                    女
-                                                </c:if>
-                                            </td>
-                                            <td><fmt:formatDate value="${student.birthday}" pattern="yyyy年MM月dd日"/></td>
-                                            <td><c:out value="${student.grade.name}"/></td>
-                                            <%--<td><c:out value="${student.subjects}"/></td>--%>
-                                            <td>${fn:length(student.subjects)}</td>
-                                            <td></td>
-                                            <td>
-                                                <a href="${pageContext.request.contextPath}/toInputScore.action?id=${student.id}">
-                                                    <button style="width: 66px;height: 32px; border-radius: 6px; background-color: green; color: #FFFFFF;">录入</button>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="${pageContext.request.contextPath}/toSelectSubject.action?id=${student.id}">
-                                                    <button style="width: 66px;height: 32px; border-radius: 6px; background-color: green; color: #FFFFFF;">选课</button>
-                                                </a>
-                                            </td>
+                                            <td>${subject.sid}</td>
+                                            <td><c:out value="${subject.name}"/></td>
+                                            <td>${fn:length(subject.students)}</td>
+                                            <td>${subject.avgscore}</td>
                                             <td>
                                                 <div class="hidden-sm hidden-xs btn-group">
-                                                    <a href="${pageContext.request.contextPath}/showStudent.action?id=${student.id}">
+                                                    <a href="${pageContext.request.contextPath}/showSubjectById.action?subjectId=${subject.sid}">
                                                         <button style="width: 66px;height: 32px; border-radius: 6px; background-color: #438EB9; color: #FFFFFF;">
                                                             修改
                                                         </button>
                                                     </a>
-
-                                                    <a href="${pageContext.request.contextPath}/deleteStudentById.action?id=${student.id}&currentPage=${page.number + 1}">
-                                                        <button style="width: 66px;height: 32px; border-radius: 6px; background-color: #ff0000; color: #FFFFFF;">
+                                                    <a href="${pageContext.request.contextPath}/deleteSubjectById.action?subjectId=${subject.sid}">
+                                                        <button style="width: 66px;height: 32px; border-radius: 6px; background-color: #ff0000; color: #FFFFFF;" disabled="disabled">
                                                             删除
                                                         </button>
                                                     </a>
-
                                                 </div>
-
                                                 <div class="hidden-md hidden-lg">
                                                     <div class="inline pos-rel">
                                                         <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
@@ -845,20 +821,20 @@
                                                 </div>
                                             </td>
                                         </tr>
-                                        <%--<tr class="detail-row">
+                                        &lt;%&ndash;<tr class="detail-row">
                                             <td colspan="8">
                                                 <div class="table-detail">
                                                     <div class="row">
                                                         <div class="col-xs-12 col-sm-2">
                                                             <div class="text-center">
-                                                                <img height="150" class="thumbnail inline no-margin-bottom" alt="Domain Owner's Avatar" src="${student.picPath}"/>
+                                                                <img height="150" class="thumbnail inline no-margin-bottom" alt="Domain Owner's Avatar" src="${subject.}"/>
                                                                 <br />
                                                                 <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
                                                                     <div class="inline position-relative">
                                                                         <a class="user-title-label" href="#">
                                                                             <i class="ace-icon fa fa-circle light-green"></i>
                                                                             &nbsp;
-                                                                            <span class="white">${student.studentName}</span>
+                                                                            <span class="white">${subject.subjectName}</span>
                                                                         </a>
                                                                     </div>
                                                                 </div>
@@ -870,43 +846,26 @@
 
                                                             <div class="profile-user-info profile-user-info-striped">
                                                                 <div class="profile-info-row">
-                                                                    <div class="profile-info-name"> 姓名 </div>
+                                                                    <div class="profile-info-name"> 学科序号 </div>
 
                                                                     <div class="profile-info-value">
-                                                                        <span>${student.studentName}</span>
+                                                                        <span>${subject.subjectId}</span>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="profile-info-row">
-                                                                    <div class="profile-info-name">学号</div>
+                                                                    <div class="profile-info-name"> 学科名称 </div>
 
                                                                     <div class="profile-info-value">
-                                                                        <span>${student.studentId}</span>
+                                                                        <span>${subject.subjectName}</span>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="profile-info-row">
-                                                                    <div class="profile-info-name"> 班级 </div>
+                                                                    <div class="profile-info-name"> 选课人数 </div>
 
                                                                     <div class="profile-info-value">
-                                                                        <span>${student.gradePO.gradeName}</span>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="profile-info-row">
-                                                                    <div class="profile-info-name"> 出生日期 </div>
-
-                                                                    <div class="profile-info-value">
-                                                                        <span><fmt:formatDate value="${student.birthday}" pattern="yyyy年MM月dd日"/></span>
-                                                                    </div>
-                                                                </div>
-
-
-                                                                <div class="profile-info-row">
-                                                                    <div class="profile-info-name"> 选修科目数 </div>
-
-                                                                    <div class="profile-info-value">
-                                                                        <span>${student.subjectNumber}</span>
+                                                                        <span>${subject.studentNumber}</span>
                                                                     </div>
                                                                 </div>
 
@@ -914,7 +873,7 @@
                                                                     <div class="profile-info-name"> 平均分 </div>
 
                                                                     <div class="profile-info-value">
-                                                                        <span>${student.avgScore}</span>
+                                                                        <span>${subject.avgScore}</span>
                                                                     </div>
                                                                 </div>
 
@@ -923,12 +882,13 @@
                                                     </div>
                                                 </div>
                                             </td>
-                                        </tr>--%>
+                                        </tr>&ndash;%&gt;
                                     </c:forEach>
                                     </tbody>
                                 </table>
                             </div><!-- /.span -->
-                        </div><!-- /.row -->
+                        </div><!-- /.row -->--%>
+
                         <div class="row" style="display: none;">
                             <div class="col-xs-12">
                                 <div>
@@ -939,31 +899,66 @@
                         </div>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form action="${pageContext.request.contextPath}/updateSubject.action" method="post" enctype="multipart/form-data">
+                            <input type="hidden" value="${subject.sid}" name="sid"/>
+                            <%--<input type="hidden" value="${subject.picPath}" name="picPath"/>
+                            <input type="hidden" value="${subject.avgScore}" name="avgScore"/>
+                            <input type="hidden" value="${subject.studentNumber}" name="studentNumber"/>--%>
+                            <div class="row">
+                                <div class="col-xs-2"></div>
+                                <div class="col-xs-8" style="text-align: center;">
+                                    <%--<c:forEach items="${errors}" var="error">
+                                        <p style="color: red;">${error.value}</p>
+                                    </c:forEach>
+                                    <p style="color: green;">${msg}</p>--%>
+                                    <table class="table table-bordered" style="text-align: center;">
+                                        <tr>
+                                            <td style="width: 20%;">学科名:</td>
+                                            <td><input type="text" class="form-control" value="<c:out value="${subject.name}"/>" name="sname" placeholder="请输入学科名"/></td>
+                                        </tr>
+                                        <%--<tr>
+                                            <td>照片:</td>
+                                            <td><input type="file" class="form-control" name="pic" placeholder="请选择照片"/></td>
+                                        </tr>--%>
+                                        <tr>
+                                            <td></td>
+                                            <td>
+                                                <input type="submit" style="width: 66px;height: 32px; border-radius: 6px; background-color: #438EB9; color: #FFFFFF;" name="保存" value="保存">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-xs-2"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div><!-- /.page-content -->
-
-            <center>
+            <%--<center>
                 <ul class="pagination">
                     <c:choose>
                         <c:when test="${page.number == 0}">
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=0">首页</a></li>
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=${page.number + 1 }">下一页</a></li>
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=${page.totalPages-1}">尾页</a></li>
+                            <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=0">首页</a></li>
+                            <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=${page.number + 1 }">下一页</a></li>
+                            <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=${page.totalPages-1}">尾页</a></li>
                         </c:when>
                         <c:when test="${page.number == page.totalPages - 1}">
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=0">首页</a></li>
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=${page.number  - 1}">上一页</a></li>
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=${page.totalPages-1}">尾页</a></li>
+                            <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=0">首页</a></li>
+                            <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=${page.number  - 1}">上一页</a></li>
+                            <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=${page.totalPages-1}">尾页</a></li>
                         </c:when>
                         <c:otherwise>
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=0">首页</a></li>
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=${page.number  - 1}">上一页</a></li>
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=${page.number + 1 }">下一页</a></li>
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=${page.totalPages-1}">尾页</a></li>
+                            <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=0">首页</a></li>
+                            <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=${page.number  - 1}">上一页</a></li>
+                            <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=${page.number + 1 }">下一页</a></li>
+                            <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=${page.totalPages-1}">尾页</a></li>
                         </c:otherwise>
                     </c:choose>
                 </ul>
-            </center>
-            </div><!-- /.page-content -->
+            </center>--%>
         </div><!-- /.main-content -->
 
         <div class="ace-settings-container" id="ace-settings-container">
@@ -1021,6 +1016,7 @@
 </div><!-- /.main-container -->
 
 <!-- basic scripts -->
+
 
 <!--[if !IE]> -->
 
@@ -1266,5 +1262,6 @@
 <%--<a href="http://www.iteblog.com">过往记忆</a>--%>
 </body>
 </html>
+
 
 

@@ -3,6 +3,7 @@ package com.biz.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,6 +31,12 @@ public class Subject implements Serializable {
     //级联保存、级联删除等之类的属性在多对多关系中是不需要设置
     //不能说删了学科,把学生也删掉,学生还可以玩其他的科目
     private Set<Student> students = new HashSet<Student>();
+
+    /**
+     * 学科拥有的分数
+     */
+    @OneToMany(mappedBy = "subject",cascade = CascadeType.ALL,fetch =FetchType.LAZY)
+    public List<Score> scores = new ArrayList<Score>();
 
     public Subject(){
 

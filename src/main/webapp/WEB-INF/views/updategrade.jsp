@@ -289,7 +289,7 @@
 
                 <li class="light-blue">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <img class="nav-user-photo" src="${pageContext.request.contextPath}/assets/avatars/006.jpg" alt="Jason's Photo" />
+                        <img class="nav-user-photo" src="${pageContext.request.contextPath}/assets/avatars/006.jpg" alt="Jay's Photo" />
                         <span class="user-info">
 									<small>欢迎光临,</small>
 									Jay
@@ -692,7 +692,7 @@
                         <i class="icon-home home-icon"></i>
                         <a href="#">首页</a>
                     </li>
-                    <li class="active">学生管理</li>
+                    <li class="active">班级管理</li>
                 </ul><!-- .breadcrumb -->
 
                 <div class="nav-search" id="nav-search">
@@ -708,15 +708,15 @@
             <div class="page-content">
                 <div class="page-header">
                     <h1>
-                        学生管理
+                        班级管理
                         <small>
                             <i class="icon-double-angle-right"></i>
-                            学生列表
+                            修改班级
                         </small>
                     </h1>
                 </div><!-- /.page-header -->
 
-                <div class="row">
+                <%--<div class="row">
                     <div class="col-xs-12">
                         <!-- PAGE CONTENT BEGINS -->
                         <div class="row">
@@ -733,7 +733,7 @@
 
                                 </div>
                                 <div class="col-xs-1" style="text-align: left;">
-                                    <a href="${pageContext.request.contextPath}/toAddStudent.action"><button style="width: 66px;height: 32px; border-radius: 6px; background-color: orange; color: #FFFFFF;">添加</button></a>
+                                    <a href="${pageContext.request.contextPath}/addGradeByName.action"><button style="width: 66px;height: 32px; border-radius: 6px; background-color: orange; color: #FFFFFF;">添加</button></a>
                                 </div>
                             </div>
                         </div>
@@ -743,187 +743,36 @@
                                 <table id="simple-table" class="table  table-bordered table-hover" style="text-align: center;">
                                     <thead>
                                     <tr>
-                                        <th style="width:10%; text-align: center;">详细信息</th>
-                                        <th style="width:5%; text-align: center;">序号</th>
-                                        <th style="width:10%; text-align: center;">学号</th>
-                                        <th style="width:10%; text-align: center;">姓名</th>
-                                        <th style="width:5%; text-align: center;">性别</th>
-                                        <th style="width:10%; text-align: center;">出生日期</th>
-                                        <th style="width:10%; text-align: center;">所在班级</th>
-                                        <th style="width:10%; text-align: center;">选修科目数</th>
-                                        <th style="width:5%; text-align: center;">平均分</th>
-                                        <th style="width:5%; text-align: center;">分数录入</th>
-                                        <th style="width:5%; text-align: center;">选课</th>
-                                        <th style="width:15%; text-align: center;">操作</th>
+                                        <th style="width:20%; text-align: center;">序号</th>
+                                        <th style="width:10%; text-align: center;">班级名</th>
+                                        <th style="width:10%; text-align: center;">人数</th>
+                                        <th style="width:10%; text-align: center;">平均分</th>
+                                        <th style="width:10%; text-align: center;">操作</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <c:forEach items="${allstudents}" var="student">
+                                    <c:forEach items="${allgrades}" var="grade">
                                         <tr>
-                                            <td class="center">
-                                                <div class="action-buttons">
-                                                    <a href="#" class="green bigger-140 show-details-btn" title="Show Details">
-                                                        <i class="ace-icon fa fa-angle-double-down"></i>
-                                                        <span class="sr-only">Details</span>
-                                                    </a>
-                                                </div>
-                                            </td>
-                                            <td>${student.id}</td>
-                                            <td><c:out value="${student.sid}"/></td>
-                                            <td><c:out value="${student.name}"/></td>
-                                            <td>
-                                                <c:if test="${student.sex == 1}">
-                                                    男
-                                                </c:if>
-                                                <c:if test="${student.sex == 0}">
-                                                    女
-                                                </c:if>
-                                            </td>
-                                            <td><fmt:formatDate value="${student.birthday}" pattern="yyyy年MM月dd日"/></td>
-                                            <td><c:out value="${student.grade.name}"/></td>
-                                            <%--<td><c:out value="${student.subjects}"/></td>--%>
-                                            <td>${fn:length(student.subjects)}</td>
-                                            <td></td>
-                                            <td>
-                                                <a href="${pageContext.request.contextPath}/toInputScore.action?id=${student.id}">
-                                                    <button style="width: 66px;height: 32px; border-radius: 6px; background-color: green; color: #FFFFFF;">录入</button>
-                                                </a>
-                                            </td>
-                                            <td>
-                                                <a href="${pageContext.request.contextPath}/toSelectSubject.action?id=${student.id}">
-                                                    <button style="width: 66px;height: 32px; border-radius: 6px; background-color: green; color: #FFFFFF;">选课</button>
-                                                </a>
-                                            </td>
+                                                &lt;%&ndash;<td>${grade.gradeI}</td>&ndash;%&gt;
+                                            <td><c:out value="${grade.gid}"/></td>
+                                            <td><c:out value="${grade.name}"/></td>
+                                            <td>${fn:length(grade.students)}</td>
+                                            <td><c:out value="${grade.avgscore}"/></td>
                                             <td>
                                                 <div class="hidden-sm hidden-xs btn-group">
-                                                    <a href="${pageContext.request.contextPath}/showStudent.action?id=${student.id}">
+                                                    <a href="${pageContext.request.contextPath}/findGradeById.action?gradeId=${grade.gid}">
                                                         <button style="width: 66px;height: 32px; border-radius: 6px; background-color: #438EB9; color: #FFFFFF;">
                                                             修改
                                                         </button>
                                                     </a>
-
-                                                    <a href="${pageContext.request.contextPath}/deleteStudentById.action?id=${student.id}&currentPage=${page.number + 1}">
-                                                        <button style="width: 66px;height: 32px; border-radius: 6px; background-color: #ff0000; color: #FFFFFF;">
+                                                    <a href="${pageContext.request.contextPath}/deleteGradeById.action?gradeId=${grade.gid}&currentPage=${page.number + 1}">
+                                                        <button style="width: 66px;height: 32px; border-radius: 6px; background-color: #ff0000; color: #FFFFFF;" disabled="disabled">
                                                             删除
                                                         </button>
                                                     </a>
-
-                                                </div>
-
-                                                <div class="hidden-md hidden-lg">
-                                                    <div class="inline pos-rel">
-                                                        <button class="btn btn-minier btn-primary dropdown-toggle" data-toggle="dropdown" data-position="auto">
-                                                            <i class="ace-icon fa fa-cog icon-only bigger-110"></i>
-                                                        </button>
-
-                                                        <ul class="dropdown-menu dropdown-only-icon dropdown-yellow dropdown-menu-right dropdown-caret dropdown-close">
-                                                            <li>
-                                                                <a href="#" class="tooltip-info" data-rel="tooltip" title="View">
-																				<span class="blue">
-																					<i class="ace-icon fa fa-search-plus bigger-120"></i>
-																				</span>
-                                                                </a>
-                                                            </li>
-
-                                                            <li>
-                                                                <a href="#" class="tooltip-success" data-rel="tooltip" title="Edit">
-																				<span class="green">
-																					<i class="ace-icon fa fa-pencil-square-o bigger-120"></i>
-																				</span>
-                                                                </a>
-                                                            </li>
-
-                                                            <li>
-                                                                <a href="#" class="tooltip-error" data-rel="tooltip" title="Delete">
-																				<span class="red">
-																					<i class="ace-icon fa fa-trash-o bigger-120"></i>
-																				</span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                    </div>
                                                 </div>
                                             </td>
                                         </tr>
-                                        <%--<tr class="detail-row">
-                                            <td colspan="8">
-                                                <div class="table-detail">
-                                                    <div class="row">
-                                                        <div class="col-xs-12 col-sm-2">
-                                                            <div class="text-center">
-                                                                <img height="150" class="thumbnail inline no-margin-bottom" alt="Domain Owner's Avatar" src="${student.picPath}"/>
-                                                                <br />
-                                                                <div class="width-80 label label-info label-xlg arrowed-in arrowed-in-right">
-                                                                    <div class="inline position-relative">
-                                                                        <a class="user-title-label" href="#">
-                                                                            <i class="ace-icon fa fa-circle light-green"></i>
-                                                                            &nbsp;
-                                                                            <span class="white">${student.studentName}</span>
-                                                                        </a>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-xs-12 col-sm-7">
-                                                            <div class="space visible-xs"></div>
-
-                                                            <div class="profile-user-info profile-user-info-striped">
-                                                                <div class="profile-info-row">
-                                                                    <div class="profile-info-name"> 姓名 </div>
-
-                                                                    <div class="profile-info-value">
-                                                                        <span>${student.studentName}</span>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="profile-info-row">
-                                                                    <div class="profile-info-name">学号</div>
-
-                                                                    <div class="profile-info-value">
-                                                                        <span>${student.studentId}</span>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="profile-info-row">
-                                                                    <div class="profile-info-name"> 班级 </div>
-
-                                                                    <div class="profile-info-value">
-                                                                        <span>${student.gradePO.gradeName}</span>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="profile-info-row">
-                                                                    <div class="profile-info-name"> 出生日期 </div>
-
-                                                                    <div class="profile-info-value">
-                                                                        <span><fmt:formatDate value="${student.birthday}" pattern="yyyy年MM月dd日"/></span>
-                                                                    </div>
-                                                                </div>
-
-
-                                                                <div class="profile-info-row">
-                                                                    <div class="profile-info-name"> 选修科目数 </div>
-
-                                                                    <div class="profile-info-value">
-                                                                        <span>${student.subjectNumber}</span>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="profile-info-row">
-                                                                    <div class="profile-info-name"> 平均分 </div>
-
-                                                                    <div class="profile-info-value">
-                                                                        <span>${student.avgScore}</span>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>--%>
                                     </c:forEach>
                                     </tbody>
                                 </table>
@@ -938,89 +787,98 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div><!-- /.page-content -->
-
-            <center>
-                <ul class="pagination">
-                    <c:choose>
-                        <c:when test="${page.number == 0}">
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=0">首页</a></li>
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=${page.number + 1 }">下一页</a></li>
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=${page.totalPages-1}">尾页</a></li>
-                        </c:when>
-                        <c:when test="${page.number == page.totalPages - 1}">
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=0">首页</a></li>
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=${page.number  - 1}">上一页</a></li>
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=${page.totalPages-1}">尾页</a></li>
-                        </c:when>
-                        <c:otherwise>
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=0">首页</a></li>
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=${page.number  - 1}">上一页</a></li>
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=${page.number + 1 }">下一页</a></li>
-                            <li><a href="${pageContext.request.contextPath}/pageStudent.action?currentPage=${page.totalPages-1}">尾页</a></li>
-                        </c:otherwise>
-                    </c:choose>
-                </ul>
-            </center>
-            </div><!-- /.page-content -->
-        </div><!-- /.main-content -->
-
-        <div class="ace-settings-container" id="ace-settings-container">
-            <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
-                <i class="icon-cog bigger-150"></i>
-            </div>
-
-            <div class="ace-settings-box" id="ace-settings-box">
-                <div>
-                    <div class="pull-left">
-                        <select id="skin-colorpicker" class="hide">
-                            <option data-skin="default" value="#438EB9">#438EB9</option>
-                            <option data-skin="skin-1" value="#222A2D">#222A2D</option>
-                            <option data-skin="skin-2" value="#C6487E">#C6487E</option>
-                            <option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
-                        </select>
+                </div>--%>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <!-- PAGE CONTENT BEGINS -->
+                        <form action="${pageContext.request.contextPath}/updateGradeByName.action" method="post">
+                            <div class="row">
+                                <div class="col-xs-2"></div>
+                                <div class="col-xs-8" style="text-align: center;">
+                                    <%--<c:forEach items="${errors}" var="error">
+                                        <p style="color: red;">${error.value}</p>
+                                    </c:forEach>
+                                    <p style="color: green;">${msg}</p>--%>
+                                    <table class="table table-bordered" style="text-align: center;">
+                                        <tr>
+                                            <td style="width: 20%;">班级名:</td>
+                                            <td><input type="text" class="form-control" name="gname" placeholder="请输入班级名"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td><input type="hidden" name="gid" value="${grade.gid}" /></td>
+                                            <td>
+                                                <input type="submit" style="width: 66px;height: 32px; border-radius: 6px; background-color: #438EB9; color: #FFFFFF;" name="保存" value="保存">
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-xs-2"></div>
+                            </div>
+                        </form>
                     </div>
-                    <span>&nbsp; 选择皮肤</span>
                 </div>
+            </div><!-- /.page-content -->
 
-                <div>
-                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
-                    <label class="lbl" for="ace-settings-navbar"> 固定导航条</label>
-                </div>
 
-                <div>
-                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
-                    <label class="lbl" for="ace-settings-sidebar"> 固定滑动条</label>
-                </div>
+        </div><!-- /.page-content -->
+    </div><!-- /.main-content -->
 
-                <div>
-                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
-                    <label class="lbl" for="ace-settings-breadcrumbs">固定面包屑</label>
-                </div>
+    <div class="ace-settings-container" id="ace-settings-container">
+        <div class="btn btn-app btn-xs btn-warning ace-settings-btn" id="ace-settings-btn">
+            <i class="icon-cog bigger-150"></i>
+        </div>
 
-                <div>
-                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
-                    <label class="lbl" for="ace-settings-rtl">切换到左边</label>
+        <div class="ace-settings-box" id="ace-settings-box">
+            <div>
+                <div class="pull-left">
+                    <select id="skin-colorpicker" class="hide">
+                        <option data-skin="default" value="#438EB9">#438EB9</option>
+                        <option data-skin="skin-1" value="#222A2D">#222A2D</option>
+                        <option data-skin="skin-2" value="#C6487E">#C6487E</option>
+                        <option data-skin="skin-3" value="#D0D0D0">#D0D0D0</option>
+                    </select>
                 </div>
-
-                <div>
-                    <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
-                    <label class="lbl" for="ace-settings-add-container">
-                        切换窄屏
-                        <b></b>
-                    </label>
-                </div>
+                <span>&nbsp; 选择皮肤</span>
             </div>
-        </div><!-- /#ace-settings-container -->
-    </div><!-- /.main-container-inner -->
 
-    <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
-        <i class="icon-double-angle-up icon-only bigger-110"></i>
-    </a>
+            <div>
+                <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-navbar" />
+                <label class="lbl" for="ace-settings-navbar"> 固定导航条</label>
+            </div>
+
+            <div>
+                <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-sidebar" />
+                <label class="lbl" for="ace-settings-sidebar"> 固定滑动条</label>
+            </div>
+
+            <div>
+                <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-breadcrumbs" />
+                <label class="lbl" for="ace-settings-breadcrumbs">固定面包屑</label>
+            </div>
+
+            <div>
+                <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-rtl" />
+                <label class="lbl" for="ace-settings-rtl">切换到左边</label>
+            </div>
+
+            <div>
+                <input type="checkbox" class="ace ace-checkbox-2" id="ace-settings-add-container" />
+                <label class="lbl" for="ace-settings-add-container">
+                    切换窄屏
+                    <b></b>
+                </label>
+            </div>
+        </div>
+    </div><!-- /#ace-settings-container -->
+</div><!-- /.main-container-inner -->
+
+<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+    <i class="icon-double-angle-up icon-only bigger-110"></i>
+</a>
 </div><!-- /.main-container -->
 
 <!-- basic scripts -->
+
 
 <!--[if !IE]> -->
 

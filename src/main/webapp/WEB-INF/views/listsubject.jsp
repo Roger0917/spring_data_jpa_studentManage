@@ -775,7 +775,7 @@
                                             <td>${subject.avgscore}</td>
                                             <td>
                                                 <div class="hidden-sm hidden-xs btn-group">
-                                                    <a href="${pageContext.request.contextPath}/showSubjectById.action?subjectId=${subject.sid}">
+                                                    <a href="${pageContext.request.contextPath}/toUpdateSubject.action?sid=${subject.sid}">
                                                         <button style="width: 66px;height: 32px; border-radius: 6px; background-color: #438EB9; color: #FFFFFF;">
                                                             修改
                                                         </button>
@@ -899,6 +899,28 @@
                     </div>
                 </div>
             </div><!-- /.page-content -->
+            <center>
+            <ul class="pagination">
+                <c:choose>
+                    <c:when test="${page.number == 0}">
+                        <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=0">首页</a></li>
+                        <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=${page.number + 1 }">下一页</a></li>
+                        <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=${page.totalPages-1}">尾页</a></li>
+                    </c:when>
+                    <c:when test="${page.number == page.totalPages - 1}">
+                        <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=0">首页</a></li>
+                        <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=${page.number  - 1}">上一页</a></li>
+                        <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=${page.totalPages-1}">尾页</a></li>
+                    </c:when>
+                    <c:otherwise>
+                        <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=0">首页</a></li>
+                        <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=${page.number  - 1}">上一页</a></li>
+                        <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=${page.number + 1 }">下一页</a></li>
+                        <li><a href="${pageContext.request.contextPath}/pageSubject.action?currentPage=${page.totalPages-1}">尾页</a></li>
+                    </c:otherwise>
+                </c:choose>
+            </ul>
+            </center>
         </div><!-- /.main-content -->
 
         <div class="ace-settings-container" id="ace-settings-container">

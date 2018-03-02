@@ -10,10 +10,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,7 +37,8 @@ public class Student implements Serializable {
     private Integer sex;
     @Column(name = "birthday")
     private Date birthday;
-
+    @Column(name = "avgscore")
+    private Double avgscore;
     /**
      * 所属班级
      */
@@ -64,6 +63,12 @@ public class Student implements Serializable {
     @JoinTable(name="student_subject",joinColumns = @JoinColumn(name = "student_id"),
         inverseJoinColumns = @JoinColumn(name = "subject_id"))
     private Set<Subject> subjects = new HashSet<Subject>();
+
+    /**
+     * 学生的分数对象
+     */
+    @OneToMany(mappedBy = "student",cascade = CascadeType.ALL,fetch =FetchType.LAZY)
+    private List<Score> scores = new ArrayList<Score>();
 
     public Student(){
 
@@ -143,6 +148,14 @@ public class Student implements Serializable {
 
     public void setSubjects(Set<Subject> subjects) {
         this.subjects = subjects;
+    }
+
+    public Double getAvgscore() {
+        return avgscore;
+    }
+
+    public void setAvgscore(Double avgscore) {
+        this.avgscore = avgscore;
     }
 
     @Override
